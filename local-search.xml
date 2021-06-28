@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>bcc Python developer tutorial -- Observability lesson 1</title>
+    <link href="/2021/06/28/Bcc_Python_developer_tutorial_observability_lesson_1/"/>
+    <url>/2021/06/28/Bcc_Python_developer_tutorial_observability_lesson_1/</url>
+    
+    <content type="html"><![CDATA[<h1 id="bcc-Python-开发者手册"><a href="#bcc-Python-开发者手册" class="headerlink" title="bcc Python 开发者手册"></a>bcc Python 开发者手册</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><p>包含<strong>17</strong>课，<strong>46</strong>个实例。</p><h3 id="Lesson-1-Hello-World"><a href="#Lesson-1-Hello-World" class="headerlink" title="Lesson 1. Hello World"></a>Lesson 1. Hello World</h3><p>在另一个会话执行的同时运行 <strong>examples/hello_world.py</strong> ，在新进程中会输出”Hello, World!”。</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment"># ./examples/hello_world.py</span><br>            bash-13364 [002] d.<span class="hljs-string">..</span> 24573433.052937: : Hello, World!<br>            bash-13364 [003] d.<span class="hljs-string">..</span> 24573436.642808: : Hello, World!<br>[<span class="hljs-string">...</span>]<br></code></pre></td></tr></table></figure><p><strong>hello_world.py</strong> 的代码如下：</p><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-keyword">from</span> bcc <span class="hljs-keyword">import</span> <span class="hljs-type">BPF</span><br><span class="hljs-type">BPF</span>(text=&#x27;<br><span class="hljs-built_in">int</span> kprobe__sys_clone(<span class="hljs-built_in">void</span> *ctx) <br>&#123; <br>bpf_trace_printk(<span class="hljs-string">&quot;Hello, World!\\n&quot;</span>); <br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br>&#x27;).trace_print()<br></code></pre></td></tr></table></figure><p>在hello_world.py中，有六件事应该注意：</p><ol><li><code>text=&#39;...&#39;</code>：定义了inline的、用C编写的BPF程序。</li><li><code>kprobe__sys_clone()</code>：使用kprobes进行内核动态跟踪。如果C定义的函数的名称以 <code>kprobe__</code>作为开头，那么函数名剩余的部分就是要检测的内核函数，例如 <code>sys_clone()</code>。</li><li><code>void *ctx</code>：ctx 是有参数的，但在此不会被用到，因此把ctx转换 <code>void *</code>。</li><li><code>bpf_trace_printk()</code>：简单地将printf()的输出重定向到公共的trace_pipe (/sys/kernel/debug/tracing/trace_pipe)。这种方法有一定的局限性：最多包含三个参数；只支持%s作为格式化参数；trace_pipe是全局共享的，并发程序会产生冲突输出。更好的接口是BPF_PERF_OUTPUT()会在以后提及。</li><li><code>return 0;</code>：是必要的。首先，动态追踪函数不建议返回未定义的值，因为它会被不同的内核钩点（socket、kprobe 等）以不同的方式使用。在socket的情况下，返回值用于表示是否抓包到用户空间。在kprobe的情况下，返回值用于确定是否应该记录可能附加到同一个kprobe的perf事件。因此，如果它们同时运行，未定义的返回值可能会导致异常的性能行为。其次，作者在 问题 <a href="https://github.com/iovisor/bcc/issues/139">#139</a> 中建议只允许具有特殊处理的函数类型使用 void 返回值，以将返回值修改为 0 或任何适合该函数类型的合理默认值。</li><li><code>.trace_print()</code>: 读取trace_pipe并打印输出的bcc程序。</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>bcc tutorial</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2021/06/23/hello-world/"/>
     <url>/2021/06/23/hello-world/</url>
@@ -11,33 +36,6 @@
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
     
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>bcc Python developer tutorial -- Observability lesson 1</title>
-    <link href="/2017/04/21/Bcc_Python_developer_tutorial_observability_lesson_1/"/>
-    <url>/2017/04/21/Bcc_Python_developer_tutorial_observability_lesson_1/</url>
-    
-    <content type="html"><![CDATA[<h1 id="bcc-Python-开发者手册"><a href="#bcc-Python-开发者手册" class="headerlink" title="bcc Python 开发者手册"></a>bcc Python 开发者手册</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><p>包含<strong>17</strong>课，<strong>46</strong>个实例。</p><h3 id="Lesson-1-Hello-World"><a href="#Lesson-1-Hello-World" class="headerlink" title="Lesson 1. Hello World"></a>Lesson 1. Hello World</h3><p>在另一个会话执行的同时运行 <strong>examples/hello_world.py</strong> ，在新进程中会输出”Hello, World!”。</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment"># ./examples/hello_world.py</span><br>            bash-13364 [002] d.<span class="hljs-string">..</span> 24573433.052937: : Hello, World!<br>            bash-13364 [003] d.<span class="hljs-string">..</span> 24573436.642808: : Hello, World!<br>[<span class="hljs-string">...</span>]<br></code></pre></td></tr></table></figure><p><strong>hello_world.py</strong> 的代码如下：</p><figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-keyword">from</span> bcc <span class="hljs-keyword">import</span> <span class="hljs-type">BPF</span><br><span class="hljs-type">BPF</span>(text=&#x27;<br><span class="hljs-built_in">int</span> kprobe__sys_clone(<span class="hljs-built_in">void</span> *ctx) <br>&#123; <br>bpf_trace_printk(<span class="hljs-string">&quot;Hello, World!\\n&quot;</span>); <br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br>&#x27;).trace_print()<br></code></pre></td></tr></table></figure><p>在hello_world.py中，有六件事应该注意：</p><ol><li><code>text=&#39;...&#39;</code>：定义了inline的、用C编写的BPF程序。</li><li><code>kprobe__sys_clone()</code>：使用kprobes进行内核动态跟踪。如果C定义的函数的名称以 <code>kprobe__</code>作为开头，那么函数名剩余的部分就是要检测的内核函数，例如 <code>sys_clone()</code>。</li><li><code>void *ctx</code>：ctx 是有参数的，但在此不会被用到，因此把ctx转换 <code>void *</code>。</li><li><code>bpf_trace_printk()</code>：简单地将printf()的输出重定向到公共的trace_pipe (/sys/kernel/debug/tracing/trace_pipe)。这种方法有一定的局限性：最多包含三个参数；只支持%s作为格式化参数；trace_pipe是全局共享的，并发程序会产生冲突输出。更好的接口是BPF_PERF_OUTPUT()会在以后提及。</li><li><code>return 0;</code>：是必要的。首先，动态追踪函数不建议返回未定义的值，因为它会被不同的内核钩点（socket、kprobe 等）以不同的方式使用。在socket的情况下，返回值用于表示是否抓包到用户空间。在kprobe的情况下，返回值用于确定是否应该记录可能附加到同一个kprobe的perf事件。因此，如果它们同时运行，未定义的返回值可能会导致异常的性能行为。其次，作者在 问题 <a href="https://github.com/iovisor/bcc/issues/139">#139</a> 中建议只允许具有特殊处理的函数类型使用 void 返回值，以将返回值修改为 0 或任何适合该函数类型的合理默认值。</li><li><code>.trace_print()</code>: 读取trace_pipe并打印输出的bcc程序。</li></ol>]]></content>
-    
-    
-    <categories>
-      
-      <category>bcc tutorial //文章分类</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>bcc //文章标签</tag>
-      
-      <tag>Python //文章标签</tag>
-      
-    </tags>
     
   </entry>
   
