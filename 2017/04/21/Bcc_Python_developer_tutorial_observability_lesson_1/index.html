@@ -118,107 +118,60 @@
 <div id="content-outer">
   <div id="content-inner">
     
-<div class="post-header" style="background-image:url(/images/coverpic.png);background-color:#26A69A ">
-    <a  href=""  >
-        <div class="post-header-title">
-            <p style="">
-                
-                
-                生活不只代码和远方
-                
-                
-                <br>
-                
-                <span id="busuanzi_container_site_pv" style="color: white;font-size:10px;line-height: 10px;display: inline-block;height: 10px">
-                你是第<span id="busuanzi_value_site_pv"></span>位访客
-                </span>
-                
-            </p>
-        </div>
-    </a>
-</div>
-<div class="post-author">
-    <div class="post-author-img"><img src="/images/header.png" ondragstart="return false;"></div>
-    <p class="post-author-name">Haoyang Liu</p>
-    <div class="post-author-button"  target="_self"><i class="material-icons"  target="_self" style="font-size: 20px">share</i></div>
-    <div class="post-author-link"><ul>
-            <p>分享到：</p>
-            <li><a href="http://v.t.sina.com.cn/share/share.php?url=http://example.com&title=Hexo" target="_blank">新浪微博</a></li>
-            <li><a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com" target="_blank">QQ空间</a></li>
-            <li><a href="http://connect.qq.com/widget/shareqq/index.html?title=qqhaoyou&url=http://example.com &desc= Hexo" target="_blank">QQ好友</a></li>
-        </ul></div>
-</div>
-
-
-<div id="recent-posts">
+<article id="post">
+  <div class="post-page-title" style="background-color:#26A69A;background-image:url(//文章的图片url，如果不填则为默认图片)" >
+  <h2>bcc Python developer tutorial -- Observability lesson 1</h2>
     
+  <p>作者:Haoyang Liu &nbsp&nbsp 发布于:<time datetime="2017-04-21T02:41:30.000Z">
+          2017-04-21
+    </time>
+  </p>
     
-    
-    
-  <div class="recent-post-item lazy" style="min-height: 150px;background-color:#26A69A"   data-original="//文章的图片url，如果不填则为默认图片"  >
-    <div class="recent-post-item-up"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBjbGFzcz0iaWNvbiIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOC4wMHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTI2MC4wMTYgNTg0LjA5NmwxMTIuNi0xMTIuNTM2IDEyLjQ0IDEyLjQ0OC0xMTIuNiAxMTIuNTM2ek0yMzYuNzIgNTYxLjE3NmwxMTIuNTc2LTExMi41NjggMTIuNDQgMTIuNDQ4LTExMi41NjggMTEyLjU2OHpNMTAxLjMxMiA0NTAuNzQ0bDM2LjItMzYuMiAxOC4xMDQgMTguMDk2LTM2LjIgMzYuMjA4ek0yMTMuOTY4IDUzOC44NGwxMTIuNTYtMTEyLjU3NiAxMi40NDggMTIuNDQ4LTExMi41NiAxMTIuNTY4ek0xOTEuMTg0IDUxNS40MzJMMzAzLjc2IDQwMi44NTZsMTIuNDQgMTIuNDQ4LTExMi41NjggMTEyLjU2OHpNMjAwLjQ0IDM1MS41NDRsMzYuNzY4LTM2Ljc3NiAxOC4xMDQgMTguMTA0LTM2Ljc3NiAzNi43Njh6IiBmaWxsPSIjNzA3MDcwIiAvPjxwYXRoIGQ9Ik0wIDB2MTAyNEwxMDI0IDBIMHogbTI0MCAyOTEuMmw0NCA0NC0xMy42IDEzLjYtNC44LTQuOC0xMzYgMTM2IDQuOCA0LjgtMTMuNiAxMy42LTQ0LTQ0TDI0MCAyOTEuMnogbTAuOCAzNjAuOGwtMTEuMi0xMS4yIDI5LjYtMjkuNi05Mi44LTkyIDYwLjgtNjAuOC0xMi44LTEyLjgtODUuNiA4NS42LTExLjItMTEuMiA4NS42LTg1LjYtMTAuNC0xMC40IDE0LjQtMTQuNCAxMC40IDEwLjQgODgtODggMTEuMiAxMS4yLTg4IDg4IDEyLjggMTIuOCA2NC44LTY0LjggOTIgOTIgMjcuMi0yNy4yIDExLjIgMTEuMi0xOTYgMTk2Ljh6TTQ2NS42IDQyNGMtNi40IDYuNC0xMiAxMi0xNi44IDE2LTYuNC01LjYtMTMuNi0xMC40LTIwLjgtMTQuNCA3LjItNC44IDE0LjQtMTAuNCAyMC44LTE2LjhzNi40LTEyLjggMC0xOC40TDMxNy42IDI1OC40bC0zMiAzMi0xNC40LTE0LjQgNzMuNi03My42IDE0LjQgMTQuNC0yNi40IDI2LjRMNDY2LjQgMzc2YzE2IDE2IDE2IDMyLTAuOCA0OHogbS03OC40LTE5MmwzNi44LTM2LjgtMjEuNi0zMi44LTQ0LjggNDQuOC0xMy42LTE0LjRMNDYyLjQgNzQuNGwxNC40IDE0LjQtNTcuNiA1Ny42IDIwLjggMzMuNiA1NS4yLTU1LjIgOTUuMiA5NS4yLTE1LjIgMTUuMi04MS42LTgwLjgtNzYuOCA3Ni44IDgxLjYgODEuNi0xNS4yIDE1LjItOTYtOTZ6IG0xMzMuNiAxNTZjLTcuMi0xLjYtMTUuMi0zLjItMjQtNC44IDE3LjYtMzIgMjUuNi02MCAyMy4yLTgzLjItMi40LTIwLjgtMTYtNDQtNDAtNjhsLTIyLjQtMjIuNCAxNS4yLTE1LjIgMjEuNiAyMS42YzE2LjggMTYuOCAyOC44IDMyLjggMzYuOCA0OCAzNi44LTggNzEuMi0xNC40IDEwMy4yLTE5LjJsMi40IDI0LjhjLTMyLjggMy4yLTY0LjggOC05Ny42IDE0LjQgMS42IDQgMi40IDggMi40IDExLjIgNC44IDI2LjQtMi40IDU3LjYtMjAuOCA5Mi44eiIgZmlsbD0iIzcwNzA3MCIgLz48cGF0aCBkPSJNMTUxLjM4NCA0MDEuNjk2bDM2LjIwOC0zNi4yIDE4LjA5NiAxOC4xMDQtMzYuMiAzNi4yeiIgZmlsbD0iIzcwNzA3MCIgLz48L3N2Zz4="></div>
-    <a class="recent-post-link" href="/2017/04/21/Bcc_Python_developer_tutorial_observability_lesson_1/" style="min-height: 150px">
-      <div class="post-hover" style="min-height: 150px;text-align: center;padding: 20px 20px 20px 20px;">
-        <!--title-->
-        <p class="post-title" style="line-height: 50px"><a href="/2017/04/21/Bcc_Python_developer_tutorial_observability_lesson_1/" >bcc Python developer tutorial -- Observability lesson 1</a></p>
-      </div>
-    </a>
   </div>
-    
-    
-  
-    
-      <div class="recent-post-item lazy"style="background-color:#26A69A"  data-original="/images/random/vateral-7.png"  >
-        <a class="recent-post-link" href="/2021/06/23/hello-world/">
-        <div class="post-hover">
-          <!--title-->
-          <p class="post-title"><a href="/2021/06/23/hello-world/" >Hello World</a></p>
+  <div class="post-page-content">
+  <h1 id="bcc-Python-开发者手册"><a href="#bcc-Python-开发者手册" class="headerlink" title="bcc Python 开发者手册"></a>bcc Python 开发者手册</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><p>包含<strong>17</strong>课，<strong>46</strong>个实例。</p>
+<h3 id="Lesson-1-Hello-World"><a href="#Lesson-1-Hello-World" class="headerlink" title="Lesson 1. Hello World"></a>Lesson 1. Hello World</h3><p>在另一个会话执行的同时运行 <strong>examples/hello_world.py</strong> ，在新进程中会输出”Hello, World!”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ./examples/hello_world.py</span><br><span class="line">            bash-13364 [002] d... 24573433.052937: : Hello, World!</span><br><span class="line">            bash-13364 [003] d... 24573436.642808: : Hello, World!</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
 
-          <!--date-->
-          
-            <p class="post-time">Haoyang Liu &nbsp &nbsp 发布于:<time datetime="2021-06-23T12:08:04.054Z">
-              2021-06-23
-            </time>
-            </p>
-          
+<p><strong>hello_world.py</strong> 的代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from bcc import BPF</span><br><span class="line">BPF(text=&#x27;</span><br><span class="line">int kprobe__sys_clone(void *ctx) </span><br><span class="line">&#123; </span><br><span class="line">	bpf_trace_printk(&quot;Hello, World!\\n&quot;); </span><br><span class="line">	return 0; </span><br><span class="line">&#125;</span><br><span class="line">&#x27;).trace_print()</span><br></pre></td></tr></table></figure>
 
-          <!--tags-->
+<p>在hello_world.py中，有六件事应该注意：</p>
+<ol>
+<li><code>text=&#39;...&#39;</code>：定义了inline的、用C编写的BPF程序。</li>
+<li><code>kprobe__sys_clone()</code>：使用kprobes进行内核动态跟踪。如果C定义的函数的名称以 <code>kprobe__</code>作为开头，那么函数名剩余的部分就是要检测的内核函数，例如 <code>sys_clone()</code>。</li>
+<li><code>void *ctx</code>：ctx 是有参数的，但在此不会被用到，因此把ctx转换 <code>void *</code>。</li>
+<li><code>bpf_trace_printk()</code>：简单地将printf()的输出重定向到公共的trace_pipe (/sys/kernel/debug/tracing/trace_pipe)。这种方法有一定的局限性：最多包含三个参数；只支持%s作为格式化参数；trace_pipe是全局共享的，并发程序会产生冲突输出。更好的接口是BPF_PERF_OUTPUT()会在以后提及。</li>
+<li><code>return 0;</code>：是必要的。首先，动态追踪函数不建议返回未定义的值，因为它会被不同的内核钩点（socket、kprobe 等）以不同的方式使用。在socket的情况下，返回值用于表示是否抓包到用户空间。在kprobe的情况下，返回值用于确定是否应该记录可能附加到同一个kprobe的perf事件。因此，如果它们同时运行，未定义的返回值可能会导致异常的性能行为。其次，作者在 问题 <a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/issues/139">#139</a> 中建议只允许具有特殊处理的函数类型使用 void 返回值，以将返回值修改为 0 或任何适合该函数类型的合理默认值。</li>
+<li><code>.trace_print()</code>: 读取trace_pipe并打印输出的bcc程序。</li>
+</ol>
 
-          标签:
-            
-              暂无标签
-            
-          <!--分类-->
-
-          分类:
-            
-                暂无分类
-            
-
-          <!--excerpt-->
-          <div class="post-excerpt">
-            <p>
-              摘要：
-              
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems w...
-              
-            </p>
-          </div>
-          <div class="post-more"><a href="/2021/06/23/hello-world/" >全文阅读</a></div>
-        </div>
-        </a>
-      </div>
+  </div>
+  <!--评论块-->
     
-  
+
+</article>
+<nav class="post-nav">
+  <!-- Prev Nav -->
     
-  
-  <nav class="paging">
-    <span class="page-number current">1</span>
+  <a href="/2021/06/23/hello-world/" id="post_nav-newer" class="post-nav-content prev-content">
+      新篇
+  </a>
+    
+
+
+  <!-- Next Nav -->
+    
 </nav>
+<div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
+<div class="post-toc-none"><p>(无)</p></div>
+<div class="post-toc-box">
+    <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#bcc-Python-%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C"><span class="post-toc-number">1.</span> <span class="post-toc-text">bcc Python 开发者手册</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%8E%A2%E6%B5%8B"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">探测</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Lesson-1-Hello-World"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Lesson 1. Hello World</span></a></li></ol></li></ol></li></ol>
 </div>
-
-
-
+<!--<div class="post-back"><i class="material-icons">arrow_back</i></div>-->
+<script type="text/javascript">
+    menu();
+</script>
   </div>
 </div>
 <div id="bottom-outer">
