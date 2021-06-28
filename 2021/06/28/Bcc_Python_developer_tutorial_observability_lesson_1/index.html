@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  
+  <meta name="keywords" content="网站关键字">
+  <meta name="description" content="网站简介">
+  
+  <title>Hexo</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/materialize.min.css">
+    
+      <link rel="stylesheet" href="/css/main.min.css">
+    
+  
+  <style type="text/css">
+      html{
+          font-family: sans-serif;
+          font-weight: 300;
+      }
+      @font-face {
+          font-family: 'Material Icons';
+          font-style: normal;
+          font-weight: 400;
+          src: url(/fonts/MaterialIcons-Regular.eot);
+          src: url(/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+          url(/fonts/MaterialIcons-Regular.woff) format('woff'),
+          url(/fonts/MaterialIcons-Regular.ttf) format('truetype')
+      }
+  </style>
+<link rel="shortcut icon" href="/source/favicon.ico">
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+<div id="menu-box"><a href="javascript:void(0)" id="menu" data-activates="slide-out" class="button-collapse menu" ><span class="nav-btn"></span></a></div>
+<div id="menu-outer">
+  <div id="menu-inner">
+      <ul id="slide-out" class="side-nav" >
+    <div class="nav-header"  style="background-image: url(/images/header-bg.png);background-color:#26A69A">
+    <div class="header-box"><img src="/images/header.png" ondragstart="return false;"></div>
+    <p>Haoyang Liu</p>
+    <div class="nav-link">
+        
+        <a href="http://example.com" target="_blank"> <div class="link-box twitter"></div></a>
+        
+        
+        <a  href="http://example.com" target="_blank"><div class="link-box github"></div></a>
+        
+        
+        <a href="mailto:http://example.com"><div class="link-box email"></div></a>
+        
+        
+        <a href="http://example.com" target="_blank"><div class="link-box weibo"></div></a>
+        
+        
+        <a href="http://example.com" target="_blank"> <div class="link-box zhihu"></div></a>
+        
+    </div>
+    <div class="nav-search">
+        <form id="search-form"> <!-- 搜索框相关 -->
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索..." class="search form-control" autocomplete="off" autocorrect="off"/>
+            <div class="nav-search-img"><i class="material-icons">search</i></div>
+        </form>
+        <div id="local-search-result"></div> <!-- 搜索结果区 -->
+        <p class='no-result'>无搜索结果</p>
+    </div>
+</div>
+    <!--Homepage-->
+
+<li class="nav-list">
+    <a href="/" target="_self">
+        <div class="nav-ico"><i class="material-icons">home</i> </div><p>主页</p>
+    </a>
+</li>
+
+<!--archives-->
+
+<li class="nav-list dropdown-btn">
+    <a  class=""  target="_self">
+        <div class="nav-ico"><i class="material-icons">assignment</i></div><p>归档</p><div class="dropdown-ico"><i class="material-icons">arrow_drop_down</i></div>
+    </a>
+</li>
+
+<ul class="dropdown-menu dropdown" >
+    <li class="nav-dropdown-list">
+        <a class="archive-link" href="/archives/2021/06/">June 2021<span class="archive-count">2</span></a>
+    </li>
+</ul>
+<!--categories-->
+
+<ul class="dropdown-menu dropdown" >
+    <li class="nav-dropdown-list">
+        
+    </li>
+</ul>
+<!--tags-->
+
+<li class="nav-list">
+    <a href="/archives" target="_self">
+        <div class="nav-ico"><i class="material-icons">bookmark</i> </div><p>标签</p>
+    </a>
+</li>
+
+<!--photo-->
+
+<!--friends-->
+
+<!--about-->
+
+
+</ul>
+
+  </div>
+</div>
+
+<div id="content-outer">
+  <div id="content-inner">
+    
+<article id="post">
+  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-3.png)" >
+  <h2>bcc Python developer tutorial -- Observability lesson 1</h2>
+    
+  <p>作者:Haoyang Liu &nbsp&nbsp 发布于:<time datetime="2021-06-28T03:55:43.735Z">
+          2021-06-28
+    </time>
+  </p>
+    
+  </div>
+  <div class="post-page-content">
+  <h1 id="bcc-Python-开发者手册"><a href="#bcc-Python-开发者手册" class="headerlink" title="bcc Python 开发者手册"></a>bcc Python 开发者手册</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><p>包含<strong>17</strong>课，<strong>46</strong>个实例。</p>
+<h3 id="Lesson-1-Hello-World"><a href="#Lesson-1-Hello-World" class="headerlink" title="Lesson 1. Hello World"></a>Lesson 1. Hello World</h3><p>在另一个会话执行的同时运行 **examples/**<strong>hello_world.py</strong> ，在新进程中会输出”Hello, World!”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ./examples/hello_world.py</span><br><span class="line">            bash-13364 [002] d... 24573433.052937: : Hello, World!</span><br><span class="line">            bash-13364 [003] d... 24573436.642808: : Hello, World!</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p><strong>hello_world.py</strong> 的代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from bcc import BPF</span><br><span class="line">BPF(text=&#x27;</span><br><span class="line">int kprobe__sys_clone(void *ctx) </span><br><span class="line">&#123; </span><br><span class="line">	bpf_trace_printk(&quot;Hello, World!\\n&quot;); </span><br><span class="line">	return 0; </span><br><span class="line">&#125;</span><br><span class="line">&#x27;).trace_print()</span><br></pre></td></tr></table></figure>
+
+<p>在hello_world.py中，有六件事应该注意：</p>
+<ol>
+<li><code>text=&#39;...&#39;</code>：定义了inline的、用C编写的BPF程序。</li>
+<li><code>kprobe__sys_clone()</code>：使用kprobes进行内核动态跟踪。如果C定义的函数的名称以 <code>kprobe__</code>作为开头，那么函数名剩余的部分就是要检测的内核函数，例如 <code>sys_clone()</code>。</li>
+<li><code>void *ctx</code>：ctx 是有参数的，但在此不会被用到，因此把ctx转换 <code>void *</code>。</li>
+<li><code>bpf_trace_printk()</code>：简单地将printf()的输出重定向到公共的trace_pipe (/sys/kernel/debug/tracing/trace_pipe)。这种方法有一定的局限性：最多包含三个参数；只支持%s作为格式化参数；trace_pipe是全局共享的，并发程序会产生冲突输出。更好的接口是BPF_PERF_OUTPUT()会在以后提及。</li>
+<li><code>return 0;</code>：是必要的。首先，动态追踪函数不建议返回未定义的值，因为它会被不同的内核钩点（socket、kprobe 等）以不同的方式使用。在socket的情况下，返回值用于表示是否抓包到用户空间。在kprobe的情况下，返回值用于确定是否应该记录可能附加到同一个kprobe的perf事件。因此，如果它们同时运行，未定义的返回值可能会导致异常的性能行为。其次，作者在 问题 <a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/issues/139">#139</a> 中建议只允许具有特殊处理的函数类型使用 void 返回值，以将返回值修改为 0 或任何适合该函数类型的合理默认值。</li>
+<li><code>.trace_print()</code>: 读取trace_pipe并打印输出的bcc程序。</li>
+</ol>
+
+  </div>
+  <!--评论块-->
+    
+
+</article>
+<nav class="post-nav">
+  <!-- Prev Nav -->
+    
+
+
+  <!-- Next Nav -->
+    
+  <a href="/2021/06/23/hello-world/" id="post_nav-older" class="post-nav-content next-content">
+      旧篇
+  </a>
+    
+</nav>
+<div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
+<div class="post-toc-none"><p>(无)</p></div>
+<div class="post-toc-box">
+    <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#bcc-Python-%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C"><span class="post-toc-number">1.</span> <span class="post-toc-text">bcc Python 开发者手册</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%8E%A2%E6%B5%8B"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">探测</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Lesson-1-Hello-World"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Lesson 1. Hello World</span></a></li></ol></li></ol></li></ol>
+</div>
+<!--<div class="post-back"><i class="material-icons">arrow_back</i></div>-->
+<script type="text/javascript">
+    menu();
+</script>
+  </div>
+</div>
+<div id="bottom-outer">
+  <div id="bottom-inner">
+    <a  id="top-button" onfocus="this.blur();"><div class="up upinbody" style="background-color:#26A69A"><i class="material-icons material-up">vertical_align_top</i></div></a>
+
+
+<p style="line-height: 45px">Copyright ©  2017  Hexo</p>
+<p style="line-height: 45px">Powered by <a href="https://hexo.io/" target="_blank"> Hexo </a> && Theme - <a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank">Vateral</a></p>
+
+  </div>
+</div>
+
+<!--影集界面需要的资源-->
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+<script src="/js/materialize.min.js"></script>
+
+<script src="/js/main.min.js"></script>
+
+
+<script>
+    NProgress.start();
+    NProgress.done();
+    lazy();
+    links();
+    window.onpopstate = menu();
+    //pjax操作
+    $(document).pjax('a:not(.nopjax)', '#content-inner', {fragment:'#content-inner', timeout:8000});
+    $(document).on('pjax:start', NProgress.start).on('pjax:end', NProgress.done)
+        .on('pjax:end', () => {
+            dowmdiv();
+            lazy();
+            toc();
+            links();
+            menu();
+        });
+</script>
+
+</body>
+</html>
