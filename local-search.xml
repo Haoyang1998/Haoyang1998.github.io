@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>MPTCP 内核替换</title>
+    <link href="/2021/07/04/%E5%B0%86mptcp%E5%86%85%E6%A0%B8%E6%9B%BF%E6%8D%A2%E5%88%B0%E7%B3%BB%E7%BB%9F%E4%B8%AD/"/>
+    <url>/2021/07/04/%E5%B0%86mptcp%E5%86%85%E6%A0%B8%E6%9B%BF%E6%8D%A2%E5%88%B0%E7%B3%BB%E7%BB%9F%E4%B8%AD/</url>
+    
+    <content type="html"><![CDATA[<h1 id="1-将内核源码拷贝到ubuntu系统内核源码目录中。"><a href="#1-将内核源码拷贝到ubuntu系统内核源码目录中。" class="headerlink" title="1. 将内核源码拷贝到ubuntu系统内核源码目录中。"></a>1. 将内核源码拷贝到ubuntu系统内核源码目录中。</h1><h4 id="这里是从github上下载的、解压到名为mptcp-mptcp-v0-95文件夹的mptcp源码"><a href="#这里是从github上下载的、解压到名为mptcp-mptcp-v0-95文件夹的mptcp源码" class="headerlink" title="(这里是从github上下载的、解压到名为mptcp-mptcp_v0.95文件夹的mptcp源码)"></a>(这里是从github上下载的、解压到名为mptcp-mptcp_v0.95文件夹的mptcp源码)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo su<br>cp /home/lhy/mptcp-mptcp_v0.95 /usr/src/linux-source-4.19.142<br></code></pre></td></tr></table></figure><h5 id="tips"><a href="#tips" class="headerlink" title="tips:"></a>tips:</h5><p>​    此操作是将mptcp源码包中的所有文件拷贝到ubuntu的 /usr/src 路径下新建的命名为linux-source-&lt;即将编译的系统的内核版本号&gt;的文件夹。</p><h1 id="2-清理之前编译产生的文件"><a href="#2-清理之前编译产生的文件" class="headerlink" title="2. 清理之前编译产生的文件"></a>2. 清理之前编译产生的文件</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make mrproper<br></code></pre></td></tr></table></figure><h1 id="3-拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。"><a href="#3-拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。" class="headerlink" title="3. 拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。"></a>3. 拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。</h1><h4 id="（如果需要重新配置，则不需要拷贝config文件）"><a href="#（如果需要重新配置，则不需要拷贝config文件）" class="headerlink" title="（如果需要重新配置，则不需要拷贝config文件）"></a>（如果需要重新配置，则不需要拷贝config文件）</h4><p>​    </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>cp /boot/config-4.19.142 ./.config <br></code></pre></td></tr></table></figure><h5 id="tips-1"><a href="#tips-1" class="headerlink" title="tips:"></a>tips:</h5><p>​    config-4.19.142存在的原因是我之前已经编译过这个mptcp源码了，如果没编译过4.19.142版本的源码应该是不会有这个文件的。</p><h1 id="4-执行系统配置"><a href="#4-执行系统配置" class="headerlink" title="4. 执行系统配置"></a>4. 执行系统配置</h1><h4 id="如果执行了第3步"><a href="#如果执行了第3步" class="headerlink" title="如果执行了第3步"></a>如果执行了第3步</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make menuconfig<br>选择 load .config<br>选择 ok<br>选择 save<br>选择 exit<br></code></pre></td></tr></table></figure><h4 id="如果没执行第3步"><a href="#如果没执行第3步" class="headerlink" title="如果没执行第3步"></a>如果没执行第3步</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make menuconfig<br>（进行需要的配置）<br>选择 save<br>选择 exit<br></code></pre></td></tr></table></figure><h1 id="5-编译系统"><a href="#5-编译系统" class="headerlink" title="5. 编译系统"></a>5. 编译系统</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make clean<br>make -j 4<br>make -j 4 modules modules_install<br>make -j 4 install<br></code></pre></td></tr></table></figure><h1 id="6-reboot重新启动系统"><a href="#6-reboot重新启动系统" class="headerlink" title="6. reboot重新启动系统"></a>6. reboot重新启动系统</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">reboot<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>MPTCP relation</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Shell</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Bcc Python developer tutorial</title>
     <link href="/2021/06/28/Bcc_Python_developer_tutorial_observability_lesson_1/"/>
     <url>/2021/06/28/Bcc_Python_developer_tutorial_observability_lesson_1/</url>

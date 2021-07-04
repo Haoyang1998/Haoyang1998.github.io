@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Observability lesson 1">
+  <meta name="description" content="MPTCP relation">
   <meta name="author" content="Haoyang Liu">
   <meta name="keywords" content="">
   
-  <title>Bcc Python developer tutorial - Will be better</title>
+  <title>MPTCP 内核替换 - Will be better</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Bcc Python developer tutorial">
+            <span class="h2" id="subtitle" title="MPTCP 内核替换">
               
             </span>
 
@@ -178,8 +178,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-28 20:23" pubdate>
-        2021年6月28日 晚上
+      <time datetime="2021-07-04 12:36" pubdate>
+        2021年7月4日 下午
       </time>
     </span>
   
@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      478 字
+      329 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      4
        分钟
     </span>
   
@@ -230,31 +230,38 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Bcc Python developer tutorial</h1>
+            <h1 style="display: none">MPTCP 内核替换</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月28日 晚上
+                  本文最后更新于：2021年7月4日 下午
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="bcc-Python-开发者手册"><a href="#bcc-Python-开发者手册" class="headerlink" title="bcc Python 开发者手册"></a>bcc Python 开发者手册</h1><h2 id="探测"><a href="#探测" class="headerlink" title="探测"></a>探测</h2><p>包含<strong>17</strong>课，<strong>46</strong>个实例。</p>
-<h3 id="Lesson-1-Hello-World"><a href="#Lesson-1-Hello-World" class="headerlink" title="Lesson 1. Hello World"></a>Lesson 1. Hello World</h3><p>在另一个会话执行的同时运行 <strong>examples/hello_world.py</strong> ，在新进程中会输出”Hello, World!”。</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment"># ./examples/hello_world.py</span><br>            bash-13364 [002] d.<span class="hljs-string">..</span> 24573433.052937: : Hello, World!<br>            bash-13364 [003] d.<span class="hljs-string">..</span> 24573436.642808: : Hello, World!<br>[<span class="hljs-string">...</span>]<br></code></pre></td></tr></table></figure>
+              <h1 id="1-将内核源码拷贝到ubuntu系统内核源码目录中。"><a href="#1-将内核源码拷贝到ubuntu系统内核源码目录中。" class="headerlink" title="1. 将内核源码拷贝到ubuntu系统内核源码目录中。"></a>1. 将内核源码拷贝到ubuntu系统内核源码目录中。</h1><h4 id="这里是从github上下载的、解压到名为mptcp-mptcp-v0-95文件夹的mptcp源码"><a href="#这里是从github上下载的、解压到名为mptcp-mptcp-v0-95文件夹的mptcp源码" class="headerlink" title="(这里是从github上下载的、解压到名为mptcp-mptcp_v0.95文件夹的mptcp源码)"></a>(这里是从github上下载的、解压到名为mptcp-mptcp_v0.95文件夹的mptcp源码)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo su<br>cp /home/lhy/mptcp-mptcp_v0.95 /usr/src/linux-source-4.19.142<br></code></pre></td></tr></table></figure>
 
-<p><strong>hello_world.py</strong> 的代码如下：</p>
-<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-keyword">from</span> bcc <span class="hljs-keyword">import</span> <span class="hljs-type">BPF</span><br><span class="hljs-type">BPF</span>(text=&#x27;<br><span class="hljs-built_in">int</span> kprobe__sys_clone(<span class="hljs-built_in">void</span> *ctx) <br>&#123; <br>	bpf_trace_printk(<span class="hljs-string">&quot;Hello, World!\\n&quot;</span>); <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br>&#x27;).trace_print()<br></code></pre></td></tr></table></figure>
+<h5 id="tips"><a href="#tips" class="headerlink" title="tips:"></a>tips:</h5><p>​    此操作是将mptcp源码包中的所有文件拷贝到ubuntu的 /usr/src 路径下新建的命名为linux-source-&lt;即将编译的系统的内核版本号&gt;的文件夹。</p>
+<h1 id="2-清理之前编译产生的文件"><a href="#2-清理之前编译产生的文件" class="headerlink" title="2. 清理之前编译产生的文件"></a>2. 清理之前编译产生的文件</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make mrproper<br></code></pre></td></tr></table></figure>
 
-<p>在hello_world.py中，有六件事应该注意：</p>
-<ol>
-<li><code>text=&#39;...&#39;</code>：定义了inline的、用C编写的BPF程序。</li>
-<li><code>kprobe__sys_clone()</code>：使用kprobes进行内核动态跟踪。如果C定义的函数的名称以 <code>kprobe__</code>作为开头，那么函数名剩余的部分就是要检测的内核函数，例如 <code>sys_clone()</code>。</li>
-<li><code>void *ctx</code>：ctx 是有参数的，但在此不会被用到，因此把ctx转换 <code>void *</code>。</li>
-<li><code>bpf_trace_printk()</code>：简单地将printf()的输出重定向到公共的trace_pipe (/sys/kernel/debug/tracing/trace_pipe)。这种方法有一定的局限性：最多包含三个参数；只支持%s作为格式化参数；trace_pipe是全局共享的，并发程序会产生冲突输出。更好的接口是BPF_PERF_OUTPUT()会在以后提及。</li>
-<li><code>return 0;</code>：是必要的。首先，动态追踪函数不建议返回未定义的值，因为它会被不同的内核钩点（socket、kprobe 等）以不同的方式使用。在socket的情况下，返回值用于表示是否抓包到用户空间。在kprobe的情况下，返回值用于确定是否应该记录可能附加到同一个kprobe的perf事件。因此，如果它们同时运行，未定义的返回值可能会导致异常的性能行为。其次，作者在 问题 <a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/issues/139">#139</a> 中建议只允许具有特殊处理的函数类型使用 void 返回值，以将返回值修改为 0 或任何适合该函数类型的合理默认值。</li>
-<li><code>.trace_print()</code>: 读取trace_pipe并打印输出的bcc程序。</li>
-</ol>
+
+
+<h1 id="3-拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。"><a href="#3-拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。" class="headerlink" title="3. 拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。"></a>3. 拷贝当前ubuntu系统配置到准备编译的内核源代码目录下。</h1><h4 id="（如果需要重新配置，则不需要拷贝config文件）"><a href="#（如果需要重新配置，则不需要拷贝config文件）" class="headerlink" title="（如果需要重新配置，则不需要拷贝config文件）"></a>（如果需要重新配置，则不需要拷贝config文件）</h4><p>​    </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>cp /boot/config-4.19.142 ./.config <br></code></pre></td></tr></table></figure>
+
+<h5 id="tips-1"><a href="#tips-1" class="headerlink" title="tips:"></a>tips:</h5><p>​    config-4.19.142存在的原因是我之前已经编译过这个mptcp源码了，如果没编译过4.19.142版本的源码应该是不会有这个文件的。</p>
+<h1 id="4-执行系统配置"><a href="#4-执行系统配置" class="headerlink" title="4. 执行系统配置"></a>4. 执行系统配置</h1><h4 id="如果执行了第3步"><a href="#如果执行了第3步" class="headerlink" title="如果执行了第3步"></a>如果执行了第3步</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make menuconfig<br>选择 load .config<br>选择 ok<br>选择 save<br>选择 exit<br></code></pre></td></tr></table></figure>
+
+<h4 id="如果没执行第3步"><a href="#如果没执行第3步" class="headerlink" title="如果没执行第3步"></a>如果没执行第3步</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make menuconfig<br>（进行需要的配置）<br>选择 save<br>选择 exit<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-编译系统"><a href="#5-编译系统" class="headerlink" title="5. 编译系统"></a>5. 编译系统</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /usr/src/linux-source-4.19.142<br>make clean<br>make -j 4<br>make -j 4 modules modules_install<br>make -j 4 install<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-reboot重新启动系统"><a href="#6-reboot重新启动系统" class="headerlink" title="6. reboot重新启动系统"></a>6. reboot重新启动系统</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">reboot<br></code></pre></td></tr></table></figure>
+
 
             </div>
             <hr>
@@ -264,7 +271,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/bcc-tutorial/">bcc tutorial</a>
+                      <a class="hover-with-bg" href="/categories/MPTCP-relation/">MPTCP relation</a>
                     
                   </div>
                 
@@ -272,7 +279,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Python/">Python</a>
+                      <a class="hover-with-bg" href="/tags/Shell/">Shell</a>
                     
                   </div>
                 
@@ -289,18 +296,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/04/%E5%B0%86mptcp%E5%86%85%E6%A0%B8%E6%9B%BF%E6%8D%A2%E5%88%B0%E7%B3%BB%E7%BB%9F%E4%B8%AD/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MPTCP 内核替换</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/23/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2021/06/28/Bcc_Python_developer_tutorial_observability_lesson_1/">
+                        <span class="hidden-mobile">Bcc Python developer tutorial</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
